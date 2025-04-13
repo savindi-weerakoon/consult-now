@@ -3,12 +3,12 @@
 import { AuthProvider } from 'react-oidc-context';
 
 const oidcConfig = {
-  authority: 'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_8yPX9gkFI',
-  client_id: 'g3pu1re5fb7j7fm0u6geekpav',
-  redirect_uri: 'http://localhost:3000',
-  post_logout_redirect_uri: 'http://localhost:3000',
-  response_type: 'code',
-  scope: 'email openid phone',
+  authority: process.env.NEXT_PUBLIC_COGNITO_AUTHORITY,
+  client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
+  redirect_uri: process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URI,
+  post_logout_redirect_uri: process.env.NEXT_PUBLIC_COGNITO_LOGOUT_URI,
+  response_type: process.env.NEXT_PUBLIC_COGNITO_RESPONSE_TYPE,
+  scope: process.env.NEXT_PUBLIC_COGNITO_SCOPE,
 };
 
 export default function AuthProviderWrapper({ children }) {
