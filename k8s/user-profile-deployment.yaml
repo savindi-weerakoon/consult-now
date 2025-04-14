@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-profile-service
+  labels:
+    app: user-profile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-profile
+  template:
+    metadata:
+      labels:
+        app: user-profile
+    spec:
+      containers:
+        - name: user-profile
+          image: 696051617304.dkr.ecr.eu-north-1.amazonaws.com/user-profile-service:latest
+          ports:
+            - containerPort: 4002
+          env:
+            - name: PORT
+              value: "4002"

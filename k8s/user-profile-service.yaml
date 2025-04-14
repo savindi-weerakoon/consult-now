@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: booking-service
+  name: user-profile-service
 spec:
   selector:
-    app: booking
+    app: user-profile
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 4001
-      nodePort: 30081
+      targetPort: 4002
+      nodePort: 30082
   type: NodePort

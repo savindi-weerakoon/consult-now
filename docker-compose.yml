@@ -8,3 +8,11 @@ services:
       - "4001:4001"
     environment:
       - PORT=4001
+
+  user-profile-service:
+    build: ./services/user-profile-service
+    container_name: user-profile-service
+    ports:
+      - "4002:4002"
+    environment:
+      - PORT=4002
