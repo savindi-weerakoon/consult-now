@@ -7,6 +7,9 @@ export default function LandingPage() {
   const auth = useAuth();
   const router = useRouter();
 
+  const signIn = () => {
+    auth.signinRedirect();
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col justify-between">
@@ -23,7 +26,7 @@ export default function LandingPage() {
           </button>
         ) : (
           <button
-            onClick={() => auth.signinRedirect()}
+            onClick={() => signIn()}
             className="bg-green-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-green-700 transition"
           >
             Sign In
@@ -41,7 +44,7 @@ export default function LandingPage() {
           Safe. Confidential. Affordable.
         </p>
         <button
-          onClick={() => auth.signinRedirect()}
+          onClick={() => signIn()}
           className="bg-green-600 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:bg-green-700 transition"
         >
           Get Started Now
