@@ -1,20 +1,36 @@
 'use client';
 
-import { useAuth } from 'react-oidc-context';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Auth } from '@/lib/amplify-auth';
+import { getCurrentUser, signInWithRedirect } from '@/lib/amplify-auth';
 
 export default function LandingPage() {
-  const auth = useAuth();
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [isChecking, setIsChecking] = useState(true);
 
   const signIn = async () => {
     try {
-      await Auth.federatedSignIn();
+      await signInWithRedirect();
     } catch (err) {
       console.error('Sign-in error:', err);
     }
   };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch {
+        setUser(null); // Not signed in
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkUser();
+  }, []);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col justify-between">
@@ -22,21 +38,23 @@ export default function LandingPage() {
       <header className="px-6 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-blue-800">ConsultNow</h1>
 
-        {!auth.isLoading ? auth.user ? (
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition"
-          >
-            Dashboard
-          </button>
-        ) : (
-          <button
-            onClick={() => signIn()}
-            className="bg-green-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-green-700 transition"
-          >
-            Sign In
-          </button>
-        ) : <></>}
+        {!isChecking && (
+          user ? (
+            <button
+              onClick={() => router.push('/dashboard')}
+              className="bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition"
+            >
+              Dashboard
+            </button>
+          ) : (
+            <button
+              onClick={signIn}
+              className="bg-green-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-green-700 transition"
+            >
+              Sign In
+            </button>
+          )
+        )}
       </header>
 
       {/* Hero Section */}
@@ -49,7 +67,7 @@ export default function LandingPage() {
           Safe. Confidential. Affordable.
         </p>
         <button
-          onClick={() => signIn()}
+          onClick={signIn}
           className="bg-green-600 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:bg-green-700 transition"
         >
           Get Started Now

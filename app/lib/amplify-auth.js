@@ -1,5 +1,13 @@
+// app/lib/amplify-auth.js
 import { Amplify } from 'aws-amplify';
-import { Auth } from '@aws-amplify/auth';
+import {
+  signIn,
+  signOut,
+  getCurrentUser,
+  fetchAuthSession,
+  signInWithRedirect,
+  signUp,
+} from '@aws-amplify/auth';
 
 Amplify.configure({
   Auth: {
@@ -9,8 +17,16 @@ Amplify.configure({
     domain: process.env.NEXT_PUBLIC_COGNITO_DOMAIN?.replace(/^https?:\/\//, ''),
     redirectSignIn: process.env.NEXT_PUBLIC_COGNITO_REDIRECT_URL,
     redirectSignOut: process.env.NEXT_PUBLIC_COGNITO_LOGOUT_URI,
-    responseType: 'code', // for Cognito hosted UI with OIDC
+    responseType: 'code',
   }
 });
 
-export { Auth };
+// Export individual functions
+export {
+  signIn,
+  signOut,
+  getCurrentUser,
+  fetchAuthSession,
+  signInWithRedirect,
+  signUp,
+};

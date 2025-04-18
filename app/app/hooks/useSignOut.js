@@ -1,16 +1,16 @@
 'use client';
 
-import { Auth } from '@/lib/amplify-auth';
+import { signOut } from '@/lib/amplify-auth';
 
 export const useSignOut = () => {
-    const signOut = async () => {
+    const handleSignOut = async () => {
         try {
             localStorage.removeItem('cognito:group');
-            await Auth.signOut();
+            await signOut(); // 🔐 will trigger hosted UI redirect
         } catch (err) {
             console.error('Sign-out error:', err);
         }
     };
 
-    return { signOut };
+    return { signOut: handleSignOut };
 };
