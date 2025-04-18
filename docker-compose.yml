@@ -16,3 +16,23 @@ services:
       - "4002:4002"
     environment:
       - PORT=4002
+      
+  message-service:
+    build: ./services/message-service
+    container_name: message-service
+    ports:
+      - "4003:4003"
+    environment:
+      - PORT=4003
+
+  frontend:
+    build: ./app
+    container_name: consultnow-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      - booking-service
+      - user-profile-service
+      - message-service
