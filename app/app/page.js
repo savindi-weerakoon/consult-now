@@ -2,14 +2,18 @@
 
 import { useAuth } from 'react-oidc-context';
 import { useRouter } from 'next/navigation';
+import { Auth } from '@/lib/amplify-auth';
 
 export default function LandingPage() {
   const auth = useAuth();
   const router = useRouter();
 
-  const signIn = () => {
-    debugger
-    auth.signinRedirect();
+  const signIn = async () => {
+    try {
+      await Auth.federatedSignIn();
+    } catch (err) {
+      console.error('Sign-in error:', err);
+    }
   };
 
   return (
