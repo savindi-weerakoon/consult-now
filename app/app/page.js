@@ -1,40 +1,51 @@
 'use client';
 
-import { useAuth } from 'react-oidc-context';
+import { Amplify } from 'aws-amplify';
+import awsExports from './../aws-exports'; // Adjust the path to your aws-exports file
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+Amplify.configure(awsExports);
 
 export default function LandingPage() {
-  const auth = useAuth();
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const signIn = () => {
-    debugger
-    auth.signinRedirect();
+  useEffect(() => {
+    const checkUser = async () => {
+      setIsLoading(true);
+      try {
+        const currentUser = await Auth.currentAuthenticatedUser();
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+      }
+      setIsLoading(false);
+    };
+
+    checkUser();
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await Auth.federatedSignIn(); // Redirect to Cognito hosted UI
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await Auth.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error('Error during sign-out:', error);
+    }
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex flex-col justify-between">
-      {/* Header */}
-      <header className="px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-800">ConsultNow</h1>
-
-        {!auth.isLoading ? auth.user ? (
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition"
-          >
-            Dashboard
-          </button>
-        ) : (
-          <button
-            onClick={() => signIn()}
-            className="bg-green-600 text-white px-5 py-2 rounded-xl text-sm hover:bg-green-700 transition"
-          >
-            Sign In
-          </button>
-        ) : <></>}
-      </header>
-
       {/* Hero Section */}
       <section className="text-center px-4 py-20 max-w-3xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
