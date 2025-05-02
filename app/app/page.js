@@ -1,41 +1,11 @@
 'use client';
 
 import { Amplify } from 'aws-amplify';
-// import awsExports from './../aws-exports'; // Adjust the path to your aws-exports file
+import awsExports from './../aws-exports'; // Adjust the path to your aws-exports file
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-Amplify.configure({
-  "aws_project_region": "eu-north-1",
-  "aws_cognito_identity_pool_id": "eu-north-1:abce4657-2558-425f-a52f-b597f9c0487e", // Update with your actual Identity Pool ID
-  "aws_cognito_region": "eu-north-1",
-  "aws_user_pools_id": "eu-north-1_8yPX9gkFI",
-  "aws_user_pools_web_client_id": "2rr3p5cdk69r0m4ag13ibu3tl0",
-  "oauth": {
-    "domain": "https://eu-north-18ypx9gkfi.auth.eu-north-1.amazoncognito.com"?.replace(/^https?:\/\//, ''),
-    "redirectSignIn": "https://master.d30l3qbcug8143.amplifyapp.com" || 'd30l3qbcug8143',
-    "redirectSignOut": "http://localhost:3000",
-    "responseType": "code"
-  },
-  "aws_cognito_username_attributes": [
-    "EMAIL"
-  ],
-  "aws_cognito_social_providers": [],
-  "aws_cognito_signup_attributes": [
-    "EMAIL"
-  ],
-  "aws_cognito_mfa_configuration": "OFF",
-  "aws_cognito_mfa_types": [
-    "SMS"
-  ],
-  "aws_cognito_password_protection_settings": {
-    "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": []
-  },
-  "aws_cognito_verification_mechanisms": [
-    "EMAIL"
-  ]
-});
+Amplify.configure(awsExports);
 
 export default function LandingPage() {
   const router = useRouter();

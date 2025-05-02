@@ -3,16 +3,11 @@
 
 const awsmobile = {
     "aws_project_region": "eu-north-1",
-    "aws_cognito_identity_pool_id": "eu-north-1:abce4657-2558-425f-a52f-b597f9c0487e", // Update with your actual Identity Pool ID
+    "aws_cognito_identity_pool_id": "eu-north-1:9c99c4a7-7c94-4981-8b34-9d0f184bbb1d",
     "aws_cognito_region": "eu-north-1",
-    "aws_user_pools_id": "eu-north-1_8yPX9gkFI",
-    "aws_user_pools_web_client_id": "2rr3p5cdk69r0m4ag13ibu3tl0",
-    "oauth": {
-        "domain": "https://eu-north-18ypx9gkfi.auth.eu-north-1.amazoncognito.com"?.replace(/^https?:\/\//, ''),
-        "redirectSignIn": "https://master.d30l3qbcug8143.amplifyapp.com" || 'd30l3qbcug8143',
-        "redirectSignOut": "http://localhost:3000",
-        "responseType": "code"
-    },
+    "aws_user_pools_id": "eu-north-1_DrYwwOte5",
+    "aws_user_pools_web_client_id": "tegp0ovdaur9jlteo9l32eiar",
+    "oauth": {},
     "aws_cognito_username_attributes": [
         "EMAIL"
     ],
@@ -32,5 +27,6 @@ const awsmobile = {
         "EMAIL"
     ]
 };
+
 
 export default awsmobile;
