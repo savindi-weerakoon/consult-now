@@ -5,7 +5,7 @@ const awsmobile = {
     "aws_project_region": "eu-north-1",
     "aws_cognito_identity_pool_id": "eu-north-1:abce4657-2558-425f-a52f-b597f9c0487e", // Update with your actual Identity Pool ID
     "aws_cognito_region": "eu-north-1",
-    "aws_user_pools_id": "eu-north-1_aRf4gyEGL",
+    "aws_user_pools_id": "eu-north-1_8yPX9gkFI",
     "aws_user_pools_web_client_id": "2rr3p5cdk69r0m4ag13ibu3tl0",
     "oauth": {
         "domain": "https://eu-north-18ypx9gkfi.auth.eu-north-1.amazoncognito.com"?.replace(/^https?:\/\//, ''),
