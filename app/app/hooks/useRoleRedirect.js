@@ -2,21 +2,19 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Auth } from 'aws-amplify';
+import { Hub } from 'aws-amplify/utils';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 export const useRoleRedirect = () => {
     const router = useRouter();
 
     useEffect(() => {
+        // Function to check and redirect based on group
         const checkUser = async () => {
             try {
-                // Get the currently authenticated user
-                const user = await Auth.currentAuthenticatedUser();
+                const user = await getCurrentUser();
+                const groups = user.signInUserSession?.idToken?.payload['cognito:groups'] || [];
 
-                // Extract groups from user's attributes
-                const groups = user.signInUserSession.idToken.payload['cognito:groups'] || [];
-
-                // Handle redirection based on groups
                 if (groups.length === 0) {
                     router.push('/select-role');
                 } else if (groups.includes('customer')) {
@@ -27,13 +25,21 @@ export const useRoleRedirect = () => {
                     router.push('/dashboard');
                 }
             } catch (error) {
-                console.error('Error fetching user:', error);
-
-                // Redirect to home page if user is unauthenticated
+                console.error('User not authenticated:', error);
                 router.push('/');
             }
         };
 
+        // Listen for sign-in events
+        const unsubscribe = Hub.listen('auth', ({ payload }) => {
+            if (payload.event === 'signInWithRedirect') {
+                checkUser();
+            }
+        });
+
+        // Initial check
         checkUser();
+
+        return unsubscribe;
     }, [router]);
 };
