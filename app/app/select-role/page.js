@@ -44,7 +44,7 @@ export default function SelectRolePage() {
 
     return (
         <main className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-6">
-            <h1 className="text-2xl font-semibold mb-4">Welcome {email} 👋</h1>
+            <h1 className="text-2xl font-semibold mb-4 text-gray-600">Welcome {email} 👋</h1>
             <p className="text-gray-600 mb-6">Select how you want to use ConsultNow:</p>
             <div className="flex gap-6">
                 <button
