@@ -7,11 +7,13 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './../src/aws-exports';
 import { useRouter } from 'next/navigation';
+import { useRoleRedirect } from './hooks/useRoleRedirect';
 
 Amplify.configure(awsExports);
 
 export default function RootLayout({ children }) {
-
+  useRoleRedirect();
+  
   const router = useRouter();
 
   return (
