@@ -1,7 +1,7 @@
 'use client';
 
 import { Amplify } from 'aws-amplify';
-import awsExports from './../aws-exports'; // Adjust the path to your aws-exports file
+import awsExports from './../src/aws-exports'
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
