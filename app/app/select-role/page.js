@@ -1,26 +1,46 @@
 'use client';
 
-import { useAuth } from 'react-oidc-context';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getCurrentUser } from 'aws-amplify/auth';
 import { useRoleRedirect } from '@/app/hooks/useRoleRedirect';
 
 export default function SelectRolePage() {
-    const auth = useAuth();
     const router = useRouter();
-    useRoleRedirect();
+    useRoleRedirect(); // If the user already has a role, redirect
 
-    const email = auth.user?.profile?.email;
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser(currentUser);
+            } catch (err) {
+                console.error('User not authenticated:', err);
+                router.push('/');
+            }
+        };
+
+        fetchUser();
+    }, [router]);
 
     const assignGroup = async (group) => {
+        if (!user) return;
+
         await fetch('/api/assign-group', {
             method: 'POST',
-            body: JSON.stringify({ group, username: auth.user.profile['cognito:username'] }),
+            body: JSON.stringify({
+                group,
+                username: user.username,
+            }),
         });
 
-        await localStorage.setItem('cognito:group', group);
-
+        localStorage.setItem('cognito:group', group);
         router.push(`/dashboard/${group}`);
     };
+
+    const email = user?.signInUserSession?.idToken?.payload?.email || '';
 
     return (
         <main className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-6">
