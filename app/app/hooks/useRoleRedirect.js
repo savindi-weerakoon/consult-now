@@ -2,30 +2,21 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from 'react-oidc-context';
+import { Auth } from 'aws-amplify';
 
 export const useRoleRedirect = () => {
-    const auth = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!auth.isLoading) {
-            if (!auth.isAuthenticated) {
-                router.push('/');
-            } else {
-                let cognitoGroupLocalStorage = null;
-                const raw = localStorage.getItem('cognito:group');
-                if (raw) {
-                    cognitoGroupLocalStorage = [raw];
-                }
+        const checkUser = async () => {
+            try {
+                // Get the currently authenticated user
+                const user = await Auth.currentAuthenticatedUser();
 
-                let cognitoGroupAWS = auth.user?.profile?.['cognito:groups'];
-                if (cognitoGroupAWS) {
-                    localStorage.removeItem('cognito:group');
-                }
+                // Extract groups from user's attributes
+                const groups = user.signInUserSession.idToken.payload['cognito:groups'] || [];
 
-                const groups = cognitoGroupAWS || cognitoGroupLocalStorage || [];
-
+                // Handle redirection based on groups
                 if (groups.length === 0) {
                     router.push('/select-role');
                 } else if (groups.includes('customer')) {
@@ -35,7 +26,14 @@ export const useRoleRedirect = () => {
                 } else {
                     router.push('/dashboard');
                 }
+            } catch (error) {
+                console.error('Error fetching user:', error);
+
+                // Redirect to home page if user is unauthenticated
+                router.push('/');
             }
-        }
-    }, [auth.isLoading, auth.isAuthenticated, auth.user?.profile]);
+        };
+
+        checkUser();
+    }, [router]);
 };

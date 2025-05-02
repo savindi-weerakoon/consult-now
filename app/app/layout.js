@@ -1,37 +1,25 @@
 'use client';
-// ✅ Do NOT mark this whole file as 'use client'
-// Because `metadata` must be server-side
-
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
-// Amplify imports
 import React from 'react';
 import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './../aws-exports';
+import { useRouter } from 'next/navigation';
 
-// Configure Amplify
 Amplify.configure(awsExports);
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
 export default function RootLayout({ children }) {
+
+  const router = useRouter();
+
   return (
     <html lang="en">
-      <body>
+      <body className='flex flex-center items-center justify-center flex-col bg-white'>
         <Authenticator>
           {({ signOut }) => (
-            <>
+            <div className='w-full min-h-screen flex flex-col'>
               <header className="px-6 py-4 flex justify-between items-center bg-white shadow-md">
                 <h1 className="text-2xl font-bold text-blue-800">ConsultNow</h1>
                 <div className="flex items-center gap-4">
@@ -52,7 +40,7 @@ export default function RootLayout({ children }) {
                 </div>
               </header>
               {children}
-            </>
+            </div>
           )}
         </Authenticator>
       </body>
