@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/assign-group": {
+      "name": "/assign-group",
+      "lambdaFunction": "assignGroup",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

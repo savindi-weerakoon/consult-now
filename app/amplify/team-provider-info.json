@@ -31,10 +31,24 @@
     },
     "categories": {
       "auth": {
-        "test7d2204c81": {}
+        "test7d2204c81": {},
+        "userPoolGroups": {}
       },
       "function": {
-        "test741c0a39d": {}
+        "test741c0a39d": {},
+        "assignGroup": {
+          "deploymentBucketName": "amplify-test7-prod-4b416-deployment",
+          "s3Key": "amplify-builds/assignGroup-79304a6c614237732b66-build.zip"
+        }
+      },
+      "api": {
+        "assignGroupAPI": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d29iyvelx1o4vt",
+          "type": "manual"
+        }
       }
     }
   }

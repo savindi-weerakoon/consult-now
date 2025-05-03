@@ -20,11 +20,18 @@ const awsmobile = {
         "SMS"
     ],
     "aws_cognito_password_protection_settings": {
-        "passwordPolicyMinLength": 8,
+        "passwordPolicyMinLength": "6",
         "passwordPolicyCharacters": []
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
+    ],
+    "aws_cloud_logic_custom": [
+        {
+            "name": "assignGroupAPI",
+            "endpoint": "https://0g54ojg15a.execute-api.eu-north-1.amazonaws.com/prod",
+            "region": "eu-north-1"
+        }
     ]
 };
 

@@ -1,37 +1,44 @@
 'use client';
 
-import { useAuth } from 'react-oidc-context';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSignOut } from '@/app/hooks/useSignOut';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { useRoleRedirect } from '@/app/hooks/useRoleRedirect';
 
 export default function DashboardPage() {
-  const auth = useAuth();
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useRoleRedirect();
 
-  const { signOut } = useSignOut()
-
   useEffect(() => {
-    if (!auth.isLoading && auth.isAuthenticated) {
-      // 🔍 Option A: Using Cognito Groups
-      const groups = auth.user?.profile['cognito:groups'] || [];
+    const fetchUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
 
-      // 🔍 Option B: Using custom attribute (uncomment if you're using this method)
-      // const role = auth.user?.profile['custom:role'];
+        const groups = currentUser?.signInUserSession?.idToken?.payload['cognito:groups'] || [];
 
-      if (groups.includes('customer')) {
-        router.push('/dashboard/customer');
-      } else if (groups.includes('counsellor')) {
-        router.push('/dashboard/counsellor');
-      } else {
-        router.push('/dashboard'); // fallback
+        if (groups.includes('customer')) {
+          router.push('/dashboard/customer');
+        } else if (groups.includes('counsellor')) {
+          router.push('/dashboard/counsellor');
+        } else {
+          router.push('/dashboard');
+        }
+      } catch (err) {
+        console.error('User not authenticated:', err);
+        router.push('/');
+      } finally {
+        setLoading(false);
       }
-    }
-  }, [auth.isLoading, auth.isAuthenticated]);
+    };
 
-  if (auth.isLoading) {
+    fetchUser();
+  }, [router]);
+
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-white">
         <div className="flex flex-col items-center space-y-4">
@@ -44,7 +51,9 @@ export default function DashboardPage() {
     );
   }
 
-  if (!auth.isAuthenticated) return null;
+  if (!user) return null;
+
+  const email = user?.signInUserSession?.idToken?.payload?.email || '';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,11 +61,9 @@ export default function DashboardPage() {
       <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
         <h1 className="text-xl font-bold text-blue-700">ConsultNow Dashboard</h1>
         <div className="flex items-center space-x-4">
-          <span className="text-sm text-gray-600">
-            {auth.user?.profile?.email}
-          </span>
+          <span className="text-sm text-gray-600">{email}</span>
           <button
-            onClick={signOut}
+            onClick={() => signOut()}
             className="bg-red-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-red-600 transition"
           >
             Sign Out

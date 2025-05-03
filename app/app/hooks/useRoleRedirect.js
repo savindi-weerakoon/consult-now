@@ -3,17 +3,22 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Hub } from 'aws-amplify/utils';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 export const useRoleRedirect = () => {
     const router = useRouter();
 
     useEffect(() => {
-        // Function to check and redirect based on group
-        const checkUser = async () => {
+        const checkUserGroups = async () => {
             try {
-                const user = await getCurrentUser();
-                const groups = user?.signInUserSession?.idToken?.payload['cognito:groups'] || [];
+                debugger
+                const session = await fetchAuthSession();
+                const idToken = session.tokens?.idToken?.toString();
+
+                if (!idToken) throw new Error('No ID token found');
+
+                const payload = JSON.parse(atob(idToken.split('.')[1]));
+                const groups = payload['cognito:groups'] || [];
 
                 if (groups.length === 0) {
                     router.push('/select-role');
@@ -24,21 +29,19 @@ export const useRoleRedirect = () => {
                 } else {
                     router.push('/dashboard');
                 }
-            } catch (error) {
-                console.error('User not authenticated:', error);
+            } catch (err) {
+                console.error('Failed to check user groups:', err);
                 router.push('/');
             }
         };
 
-        // Listen for sign-in events
         const unsubscribe = Hub.listen('auth', ({ payload }) => {
             if (payload.event === 'signInWithRedirect') {
-                checkUser();
+                checkUserGroups();
             }
         });
 
-        // Initial check
-        checkUser();
+        checkUserGroups();
 
         return unsubscribe;
     }, [router]);
