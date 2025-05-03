@@ -13,7 +13,7 @@ export const useRoleRedirect = () => {
         const checkUser = async () => {
             try {
                 const user = await getCurrentUser();
-                const groups = user.signInUserSession?.idToken?.payload['cognito:groups'] || [];
+                const groups = user?.signInUserSession?.idToken?.payload['cognito:groups'] || [];
 
                 if (groups.length === 0) {
                     router.push('/select-role');
