@@ -11,15 +11,29 @@ export const useRoleRedirect = () => {
     useEffect(() => {
         const checkUserGroups = async () => {
             try {
-                debugger
+                let groups = [];
+
+                // Check localStorage first (in case group was just selected)
+                const localGroup = localStorage.getItem('cognito:group');
+                if (localGroup) {
+                    groups = [localGroup];
+                }
+
+                // Try to get ID token and decode groups from it
                 const session = await fetchAuthSession();
                 const idToken = session.tokens?.idToken?.toString();
 
-                if (!idToken) throw new Error('No ID token found');
+                if (idToken) {
+                    const payload = JSON.parse(atob(idToken.split('.')[1]));
+                    const awsGroups = payload['cognito:groups'];
 
-                const payload = JSON.parse(atob(idToken.split('.')[1]));
-                const groups = payload['cognito:groups'] || [];
+                    if (awsGroups) {
+                        groups = awsGroups;
+                        localStorage.removeItem('cognito:group'); // Clean up if previously stored
+                    }
+                }
 
+                // Perform redirection based on groups
                 if (groups.length === 0) {
                     router.push('/select-role');
                 } else if (groups.includes('customer')) {
@@ -35,12 +49,14 @@ export const useRoleRedirect = () => {
             }
         };
 
+        // Listen to auth events like signInWithRedirect
         const unsubscribe = Hub.listen('auth', ({ payload }) => {
             if (payload.event === 'signInWithRedirect') {
                 checkUserGroups();
             }
         });
 
+        // Initial call
         checkUserGroups();
 
         return unsubscribe;
