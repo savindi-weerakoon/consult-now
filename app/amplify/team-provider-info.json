@@ -1,4 +1,17 @@
 {
+  "master": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-consultnow-master-4dbc7-authRole",
+      "UnauthRoleArn": "arn:aws:iam::925933724303:role/amplify-consultnow-master-4dbc7-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::925933724303:role/amplify-consultnow-master-4dbc7-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-consultnow-master-4dbc7-deployment",
+      "UnauthRoleName": "amplify-consultnow-master-4dbc7-unauthRole",
+      "StackName": "amplify-consultnow-master-4dbc7",
+      "StackId": "arn:aws:cloudformation:eu-north-1:925933724303:stack/amplify-consultnow-master-4dbc7/621b4f20-2d17-11f0-a61e-0a42aa82752b",
+      "AmplifyAppId": "dtxo2j0xye3m9"
+    }
+  },
   "prod": {
     "awscloudformation": {
       "AuthRoleName": "amplify-consultnow-prod-df849-authRole",

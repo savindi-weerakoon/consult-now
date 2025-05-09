@@ -1,18 +1,17 @@
 {
-  "whyContinueWithGen1": "Prefer not to answer",
-  "projectName": "consultNow",
+  "providers": [
+    "awscloudformation"
+  ],
+  "projectName": "consultnow",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {
       "SourceDir": "app",
-      "DistributionDir": ".next",
+      "DistributionDir": "app/.next",
       "BuildCommand": "npm run build",
       "StartCommand": "npm run start"
     }
-  },
-  "providers": [
-    "awscloudformation"
-  ]
+  }
 }
