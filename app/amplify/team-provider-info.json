@@ -10,6 +10,11 @@
       "StackName": "amplify-consultnow-master-4dbc7",
       "StackId": "arn:aws:cloudformation:eu-north-1:925933724303:stack/amplify-consultnow-master-4dbc7/621b4f20-2d17-11f0-a61e-0a42aa82752b",
       "AmplifyAppId": "dtxo2j0xye3m9"
+    },
+    "categories": {
+      "auth": {
+        "consultnowdb80faaf": {}
+      }
     }
   },
   "prod": {
