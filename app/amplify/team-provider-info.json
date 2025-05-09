@@ -1,0 +1,23 @@
+{
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-consultnow-prod-df849-authRole",
+      "UnauthRoleArn": "arn:aws:iam::925933724303:role/amplify-consultnow-prod-df849-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::925933724303:role/amplify-consultnow-prod-df849-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-consultnow-prod-df849-deployment",
+      "UnauthRoleName": "amplify-consultnow-prod-df849-unauthRole",
+      "StackName": "amplify-consultnow-prod-df849",
+      "StackId": "arn:aws:cloudformation:eu-north-1:925933724303:stack/amplify-consultnow-prod-df849/c64bbed0-2d03-11f0-8cfb-0a89a9baf245",
+      "AmplifyAppId": "d2fcqkd909k4z3"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2fcqkd909k4z3",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
