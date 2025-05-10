@@ -12,7 +12,7 @@ export async function POST(req) {
         await cognito.adminAddUserToGroup({
             GroupName: group,
             Username: username,
-            UserPoolId: 'eu-north-1_oEtnFjfF7',
+            UserPoolId: 'eu-north-1_TQAP9AvCc',
         }).promise();
 
         return NextResponse.json({ success: true });

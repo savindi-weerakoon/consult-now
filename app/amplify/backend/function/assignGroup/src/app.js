@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 // ─────────── your /assign-group route ───────────
-app.post(`${ASSIGN_GROUP_API}/assign-group`, async (req, res) => {
+app.post('/assign-group', async (req, res) => {
   const { group, username } = req.body;
   if (!group || !username) {
     return res
