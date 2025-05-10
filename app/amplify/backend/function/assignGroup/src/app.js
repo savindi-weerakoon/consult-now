@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 
 // ─────────── your real /assign-group handler ───────────
 app.post('/assign-group', async (req, res) => {
+  console.log('incoming body:', req.body);
   const { group, username } = req.body;
   if (!group || !username) {
     return res

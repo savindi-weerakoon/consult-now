@@ -31,6 +31,7 @@ export default function SelectRolePage() {
 
         await fetch(`${ASSIGN_GROUP_API}/assign-group`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 group,
                 username: user.username,
