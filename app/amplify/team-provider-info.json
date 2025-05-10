@@ -18,7 +18,7 @@
       "function": {
         "assignGroup": {
           "deploymentBucketName": "amplify-consultnow-master-4dbc7-deployment",
-          "s3Key": "amplify-builds/assignGroup-4f42666d743230586b33-build.zip"
+          "s3Key": "amplify-builds/assignGroup-6f7a4a734c4261367752-build.zip"
         }
       },
       "api": {
