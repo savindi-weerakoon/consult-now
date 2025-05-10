@@ -12,6 +12,7 @@
       "DistributionDir": "app/.next",
       "BuildCommand": "npm run build",
       "StartCommand": "npm run start"
-    }
+    },
+    "packageManager": "npm"
   }
 }
