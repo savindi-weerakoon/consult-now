@@ -29,7 +29,7 @@ export default function SelectRolePage() {
     const assignGroup = async (group) => {
         if (!user) return;
 
-        await fetch('/api/assign-group', {
+        await fetch(`${ASSIGN_GROUP_API}/assign-group`, {
             method: 'POST',
             body: JSON.stringify({
                 group,

@@ -1,1 +1,1 @@
-export const ASSIGN_GROUP_API = 'https://iuuuqdx6rg.execute-api.eu-north-1.amazonaws.com/master';
+export const ASSIGN_GROUP_API = 'https://gz8hdy6cfh.execute-api.eu-north-1.amazonaws.com/master';
