@@ -4,7 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const AWS = require('aws-sdk');
-import { ASSIGN_GROUP_API } from '@/lib/api';
 
 // ─────────── configure AWS SDK ───────────
 AWS.config.update({
