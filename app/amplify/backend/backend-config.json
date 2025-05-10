@@ -1,20 +1,5 @@
 {
-  "api": {
-    "assignGroup": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "assignGroup"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    }
-  },
+  "api": {},
   "auth": {
     "consultnowdb80faaf": {
       "customAuth": false,
@@ -43,29 +28,5 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "assignGroup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_assignGroup_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "assignGroup"
-        }
-      ]
-    },
-    "AMPLIFY_function_assignGroup_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "assignGroup"
-        }
-      ]
-    }
-  }
+  "function": {}
 }

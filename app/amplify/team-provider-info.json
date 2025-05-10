@@ -14,15 +14,6 @@
     "categories": {
       "auth": {
         "consultnowdb80faaf": {}
-      },
-      "function": {
-        "assignGroup": {
-          "deploymentBucketName": "amplify-consultnow-master-4dbc7-deployment",
-          "s3Key": "amplify-builds/assignGroup-336c70756d4b7a374c73-build.zip"
-        }
-      },
-      "api": {
-        "assignGroup": {}
       }
     }
   },
